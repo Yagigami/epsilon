@@ -104,9 +104,9 @@ struct key2mp
 key2mp keyMapping[] =
 {
     { Ion::Keyboard::Key::Left, MP_ROM_QSTR(MP_QSTR_left) },
-    { Ion::Keyboard::Key::Right, MP_ROM_QSTR(MP_QSTR_up) },
+    { Ion::Keyboard::Key::Right, MP_ROM_QSTR(MP_QSTR_right) },
     { Ion::Keyboard::Key::Down, MP_ROM_QSTR(MP_QSTR_down) },
-    { Ion::Keyboard::Key::Up, MP_ROM_QSTR(MP_QSTR_right) },
+    { Ion::Keyboard::Key::Up, MP_ROM_QSTR(MP_QSTR_up) },
     { Ion::Keyboard::Key::OK, MP_ROM_QSTR(MP_QSTR_OK) },
     { Ion::Keyboard::Key::Back, MP_ROM_QSTR(MP_QSTR_back) },
 
@@ -172,4 +172,70 @@ mp_obj_t modkandinsky_get_keys() {
   }
 
   return result;
+}
+
+mp_obj_t modkandinsky_draw_line(size_t n_args, const mp_obj_t * args) {
+  KDCoordinate xFirst = mp_obj_get_int(args[0]),
+               yFirst = mp_obj_get_int(args[1]),
+               xLast = mp_obj_get_int(args[2]),
+               yLast = mp_obj_get_int(args[3]);
+
+  // checks and clipping
+  // clips "First" first. Messy. Probably should be optimized...
+  if ( xFirst < 0 ) {
+    yFirst = yLast + ( yFirst - yLast ) * xLast / ((double) xLast - xFirst );
+    xFirst = 0; // clamping needs to be done after interpolation
+  } else if ( xFirst > Ion::Display::Width ) {
+    yFirst = yLast + ( yFirst - yLast ) * ( xLast - Ion::Display::Width ) / ((double) xLast - xFirst );
+    xFirst = Ion::Display::Width;
+  }
+  if ( yFirst < 0 ) {
+    xFirst = xLast - ( xLast - xFirst ) * yLast / ((double) yLast - yFirst );
+    yFirst = 0;
+  } else if ( yFirst > Ion::Display::Height ) {
+    xFirst = xLast - ( xLast - xFirst ) * ( yLast - Ion::Display::Height ) / ((double) yLast - yFirst );
+    yFirst = Ion::Display::Height;
+  }
+
+  // clips "Last" here.
+  if ( xLast < 0 ) {
+    yLast = yFirst + ( yLast - yFirst ) * xFirst / ((double) xFirst - xLast );
+    xLast = 0;
+  } else if ( xLast > Ion::Display::Width ) {
+    yLast = yFirst + ( yLast - yFirst ) * ( xFirst - Ion::Display::Width ) / ((double) xFirst - xLast );
+    xLast = Ion::Display::Width;
+  }
+  if ( yLast < 0 ) {
+    xLast = xLast + ( xFirst - xLast ) * yLast / ((double) yLast - yFirst );
+    yLast = 0;
+  } else if ( yLast > Ion::Display::Height ) {
+    xLast = xFirst + ( xLast - xFirst ) * ( yFirst - Ion::Display::Height ) / ((double) yFirst - yLast );
+    yLast = Ion::Display::Height;
+  }
+
+  KDPoint first( xFirst, yFirst ), last( xLast, yLast );
+  KDColor color = ColorForTuple(args[4]);
+  MicroPython::ExecutionEnvironment::currentExecutionEnvironment()->displaySandbox();
+  KDIonContext::sharedContext()->drawLine(first, last, color);
+  return mp_const_none;
+}
+
+mp_obj_t modkandinsky_fill_triangle(size_t n_args, const mp_obj_t * args) {
+  KDPoint vertex0(mp_obj_get_int(args[0]),
+                  mp_obj_get_int(args[1])
+                  ),
+          vertex1(mp_obj_get_int(args[2]),
+                  mp_obj_get_int(args[3])
+                  ),
+          vertex2(mp_obj_get_int(args[4]),
+                  mp_obj_get_int(args[5])
+                  );
+  // needs clipping and checks
+
+  KDColor color = ColorForTuple(args[6]);
+  bool drawEdges = n_args >= 8 ? (bool)mp_obj_get_int(args[7]) : false;
+  KDColor edgeColor = n_args >= 9 ? ColorForTuple(args[8]) : KDColor::RGB888(0, 0, 0);
+  MicroPython::ExecutionEnvironment::currentExecutionEnvironment()->displaySandbox();
+  KDIonContext::sharedContext()->fillTriangle(vertex0, vertex1, vertex2, color, drawEdges, edgeColor);
+  return mp_const_none;
 }

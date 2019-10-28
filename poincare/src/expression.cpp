@@ -514,6 +514,7 @@ int Expression::serialize(char * buffer, int bufferSize, Preferences::PrintFloat
 /* Simplification */
 
 Expression Expression::ParseAndSimplify(const char * text, Context * context, Preferences::ComplexFormat complexFormat, Preferences::AngleUnit angleUnit, bool symbolicSimplification) {
+  symbolicSimplification = true; // don't do that
   Expression exp = Parse(text, false);
   if (exp.isUninitialized()) {
     return Undefined::Builder();
@@ -528,6 +529,7 @@ Expression Expression::ParseAndSimplify(const char * text, Context * context, Pr
 }
 
 void Expression::ParseAndSimplifyAndApproximate(const char * text, Expression * simplifiedExpression, Expression * approximateExpression, Context * context, Preferences::ComplexFormat complexFormat, Preferences::AngleUnit angleUnit, bool symbolicComputation) {
+  symbolicComputation = true; // don't do that
   assert(simplifiedExpression);
   Expression exp = Parse(text, false);
   if (exp.isUninitialized()) {
@@ -547,6 +549,7 @@ void Expression::ParseAndSimplifyAndApproximate(const char * text, Expression * 
 }
 
 Expression Expression::simplify(Context * context, Preferences::ComplexFormat complexFormat, Preferences::AngleUnit angleUnit, bool symbolicComputation) {
+  symbolicComputation = true; // don't do that
   sSimplificationHasBeenInterrupted = false;
   ExpressionNode::ReductionContext c = ExpressionNode::ReductionContext(context, complexFormat, angleUnit, ExpressionNode::ReductionTarget::System, symbolicComputation);
   Expression e = deepReduce(c);
@@ -610,6 +613,7 @@ void Expression::beautifyAndApproximateScalar(Expression * simplifiedExpression,
 }
 
 void Expression::simplifyAndApproximate(Expression * simplifiedExpression, Expression * approximateExpression, Context * context, Preferences::ComplexFormat complexFormat, Preferences::AngleUnit angleUnit, bool symbolicComputation) {
+  symbolicComputation = true; // don't do that
   assert(simplifiedExpression);
   sSimplificationHasBeenInterrupted = false;
   // Step 1: we reduce the expression
@@ -776,6 +780,7 @@ U Expression::approximateToScalar(Context * context, Preferences::ComplexFormat 
 
 template<typename U>
 U Expression::ApproximateToScalar(const char * text, Context * context, Preferences::ComplexFormat complexFormat, Preferences::AngleUnit angleUnit, bool symbolicSimplification) {
+  symbolicSimplification = true; // don't do that
   Expression exp = ParseAndSimplify(text, context, complexFormat, angleUnit, symbolicSimplification);
   assert(!exp.isUninitialized());
   return exp.approximateToScalar<U>(context, complexFormat, angleUnit);

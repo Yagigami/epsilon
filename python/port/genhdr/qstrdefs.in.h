@@ -24,6 +24,8 @@ Q(get_pixel)
 Q(set_pixel)
 Q(wait_vblank)
 Q(get_keys)
+Q(draw_line)
+Q(fill_triangle)
 
 // Keys
 Q(left)

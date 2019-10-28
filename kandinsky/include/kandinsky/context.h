@@ -22,6 +22,15 @@ public:
 
   // Line. Not anti-aliased.
   void drawLine(KDPoint p1, KDPoint p2, KDColor c);
+  void horizLine(KDPoint p0, KDPoint p1, KDColor c);
+  void vertLine(KDPoint p0, KDPoint p1, KDColor c);
+
+  // Triangle
+  void fillTriangle(KDPoint p0, KDPoint p1, KDPoint p2, KDColor c, bool drawEdges, KDColor edgeColor);
+  // those two need sorted KDPoint arguments, might be possible to optimize,
+  // probably with integer-based arithmetic instead of casting doubles
+  void fillFlatBottomTriangle(KDPoint top, KDPoint bottomLeft, KDPoint bottomRight, KDColor c);
+  void fillFlatTopTriangle(KDPoint bottom, KDPoint topLeft, KDPoint topRight, KDColor c);
 
   // Rect
   void fillRect(KDRect rect, KDColor color);
