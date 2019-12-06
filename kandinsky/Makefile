@@ -8,7 +8,10 @@ kandinsky_src += $(addprefix kandinsky/src/,\
   context_rect.cpp \
   context_text.cpp \
 	context_triangle.cpp \
+<<<<<<< HEAD
 	context_image.cpp \
+=======
+>>>>>>> 03b42069898cdbfb44f622c0b41164a55407cc90
   font.cpp \
   framebuffer.cpp \
   framebuffer_context.cpp \

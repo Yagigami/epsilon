@@ -2,7 +2,11 @@
 
 static inline void swap(KDPoint& a, KDPoint& b);
 
+<<<<<<< HEAD
 void KDContext::fillTriangle(KDPoint p0, KDPoint p1, KDPoint p2, KDColor c) {
+=======
+void KDContext::fillTriangle(KDPoint p0, KDPoint p1, KDPoint p2, KDColor c, bool drawEdges, KDColor edgeColor) {
+>>>>>>> 03b42069898cdbfb44f622c0b41164a55407cc90
   KDPoint top = p0, middle = p1, bottom = p2;
   // first we need to sort the points by ascending y-coordinate
   if (top.y() > middle.y()) {
@@ -19,6 +23,7 @@ void KDContext::fillTriangle(KDPoint p0, KDPoint p1, KDPoint p2, KDColor c) {
   if (top.y() == middle.y()) { // flat top case
     if (top.x() > middle.x()) swap(top, middle);
     KDContext::fillFlatTopTriangle(bottom, top, middle, c);
+<<<<<<< HEAD
     return;
   } else if (middle.y() == bottom.y()) { // flat bottom case
     if (middle.x() > bottom.x()) swap(middle, bottom);
@@ -33,6 +38,26 @@ void KDContext::fillTriangle(KDPoint p0, KDPoint p1, KDPoint p2, KDColor c) {
 
   KDContext::fillFlatBottomTriangle(top, p3, middle, c);
   KDContext::fillFlatTopTriangle(bottom, p3, middle, c);
+=======
+  } else if (middle.y() == bottom.y()) { // flat bottom case
+    if (middle.x() > bottom.x()) swap(middle, bottom);
+    KDContext::fillFlatBottomTriangle(top, middle, bottom, c);
+  } else { // arbitrary case
+    double mIntermediate, pIntermediate;
+    mIntermediate = ((double) top.x() - bottom.x()) / (top.y() - bottom.y());
+    pIntermediate = top.x() - mIntermediate * top.y();
+    KDPoint p3 = KDPoint(mIntermediate * middle.y() + pIntermediate, middle.y());
+    if (p3.x() > middle.x()) swap(p3, middle);
+
+    KDContext::fillFlatBottomTriangle(top, p3, middle, c);
+    KDContext::fillFlatTopTriangle(bottom, p3, middle, c);
+  }
+  if (drawEdges) {
+    KDContext::drawLine(p0, p1, edgeColor);
+    KDContext::drawLine(p1, p2, edgeColor);
+    KDContext::drawLine(p2, p0, edgeColor);
+  }
+>>>>>>> 03b42069898cdbfb44f622c0b41164a55407cc90
 }
 
 void KDContext::fillFlatBottomTriangle(KDPoint top, KDPoint bottomLeft, KDPoint bottomRight, KDColor c) {
