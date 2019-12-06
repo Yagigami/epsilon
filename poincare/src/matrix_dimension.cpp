@@ -5,7 +5,6 @@
 #include <poincare/rational.h>
 #include <poincare/serialization_helper.h>
 #include <cmath>
-#include <utility>
 
 namespace Poincare {
 
@@ -62,7 +61,7 @@ Expression MatrixDimension::shallowReduce(Context * context) {
   }
   result.setDimensions(1, 2);
   replaceWithInPlace(result);
-  return std::move(result);
+  return result;
 }
 
 }

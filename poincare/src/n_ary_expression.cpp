@@ -4,7 +4,6 @@ extern "C" {
 #include <assert.h>
 #include <stdlib.h>
 }
-#include <utility>
 
 namespace Poincare {
 
@@ -50,7 +49,7 @@ Expression NAryExpressionNode::squashUnaryHierarchyInPlace() {
     reference.replaceWithInPlace(child);
     return child;
   }
-  return std::move(reference);
+  return reference;
 }
 
 // Private

@@ -4,6 +4,7 @@ extern "C" {
 #include <py/runtime.h>
 }
 #include <kandinsky.h>
+#include <ion.h>
 #include "port.h"
 
 static KDColor ColorForTuple(mp_obj_t tuple) {

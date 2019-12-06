@@ -6,9 +6,8 @@
 #include <poincare/layout_helper.h>
 #include <poincare/serialization_helper.h>
 #include <poincare/undefined.h>
-#include <assert.h>
 #include <cmath>
-#include <utility>
+#include <assert.h>
 
 namespace Poincare {
 
@@ -90,7 +89,7 @@ Expression ConfidenceInterval::shallowReduce(ExpressionNode::ReductionContext re
   matrix.setDimensions(1, 2);
   replaceWithInPlace(matrix);
   matrix.deepReduceChildren(reductionContext);
-  return std::move(matrix);
+  return matrix;
 }
 
 

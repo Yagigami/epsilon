@@ -15,7 +15,6 @@
 #include <poincare/undefined.h>
 #include <assert.h>
 #include <cmath>
-#include <utility>
 
 namespace Poincare {
 
@@ -108,14 +107,14 @@ Expression ComplexCartesian::squareNorm(ExpressionNode::ReductionContext reducti
   if (!aFactor.isUninitialized() && !aArgument.isUninitialized() && !bFactor.isUninitialized() && !bArgument.isUninitialized() && aFactor.isIdenticalTo(bFactor) && aArgument.isIdenticalTo(bArgument)) {
     Power result = Power::Builder(aFactor, Rational::Builder(2));
     aFactor.shallowReduce(reductionContext);
-    return std::move(result);
+    return result;
   }
   Expression a2 = Power::Builder(a, Rational::Builder(2));
   Expression b2 = Power::Builder(b, Rational::Builder(2));
   Addition add = Addition::Builder(a2, b2);
   a2.shallowReduce(reductionContext);
   b2.shallowReduce(reductionContext);
-  return std::move(add);
+  return add;
 }
 
 Expression ComplexCartesian::norm(ExpressionNode::ReductionContext reductionContext) {
@@ -171,7 +170,7 @@ Expression ComplexCartesian::argument(ExpressionNode::ReductionContext reduction
     signa.shallowReduce(reductionContext);
     Multiplication mul = Multiplication::Builder(Rational::Builder(1,2), Constant::Builder(UCodePointGreekSmallLetterPi), sub);
     sub.shallowReduce(reductionContext);
-    return std::move(mul);
+    return mul;
   }
 }
 
@@ -321,7 +320,7 @@ Expression ComplexCartesian::powerHelper(Expression norm, Expression trigo, Expr
   Multiplication m = Multiplication::Builder(norm, trigo);
   norm.shallowReduce(reductionContext);
   trigo.shallowReduce(reductionContext);
-  return std::move(m);
+  return m;
 }
 
 ComplexCartesian ComplexCartesian::power(ComplexCartesian & other, ExpressionNode::ReductionContext reductionContext) {

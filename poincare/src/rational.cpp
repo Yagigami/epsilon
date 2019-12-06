@@ -5,12 +5,12 @@
 #include <poincare/infinity.h>
 #include <poincare/opposite.h>
 #include <poincare/serialization_helper.h>
-#include <assert.h>
-#include <math.h>
-#include <utility>
+extern "C" {
 #include <stdlib.h>
 #include <string.h>
-
+#include <assert.h>
+#include <math.h>
+}
 namespace Poincare {
 
 /* Rational Node */
@@ -259,7 +259,7 @@ Expression Rational::shallowBeautify() {
     Opposite o = Opposite::Builder();
     replaceWithInPlace(o);
     o.replaceChildAtIndexInPlace(0, abs);
-    return std::move(o);
+    return o;
   }
   return *this;
 }

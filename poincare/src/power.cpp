@@ -5,28 +5,27 @@
 #include <poincare/constant.h>
 #include <poincare/cosine.h>
 #include <poincare/division.h>
-#include <poincare/horizontal_layout.h>
 #include <poincare/infinity.h>
 #include <poincare/matrix.h>
 #include <poincare/matrix_identity.h>
 #include <poincare/matrix_inverse.h>
-#include <poincare/naperian_logarithm.h>
 #include <poincare/nth_root.h>
 #include <poincare/opposite.h>
+#include <poincare/naperian_logarithm.h>
 #include <poincare/parenthesis.h>
-#include <poincare/serialization_helper.h>
 #include <poincare/sine.h>
 #include <poincare/square_root.h>
-#include <poincare/subtraction.h>
 #include <poincare/symbol.h>
+#include <poincare/subtraction.h>
 #include <poincare/undefined.h>
 #include <poincare/unreal.h>
+#include <poincare/horizontal_layout.h>
 #include <poincare/vertical_offset_layout.h>
-#include <ion.h>
-#include <assert.h>
+#include <poincare/serialization_helper.h>
 #include <cmath>
 #include <math.h>
-#include <utility>
+#include <ion.h>
+#include <assert.h>
 
 namespace Poincare {
 
@@ -162,7 +161,7 @@ Layout PowerNode::createLayout(Preferences::PrintFloatMode floatDisplayMode, int
       result.numberOfChildren(),
       result.numberOfChildren(),
       nullptr);
-  return std::move(result);
+  return result;
 }
 
 // Serialize
@@ -341,11 +340,11 @@ Expression Power::shallowReduce(ExpressionNode::ReductionContext reductionContex
     if (exp == 0) {
       Matrix id = Matrix::CreateIdentity(matrixBase.numberOfRows());
       replaceWithInPlace(id);
-      return std::move(id);
+      return id;
     }
     if (exp == 1) {
       replaceWithInPlace(matrixBase);
-      return std::move(matrixBase);
+      return matrixBase;
     }
     Expression result = matrixBase.clone();
     // TODO: implement a quick exponentiation
@@ -932,7 +931,7 @@ Expression Power::simplifyRationalRationalPower(ExpressionNode::ReductionContext
       return Power::Builder(a, b);
     }
     replaceWithInPlace(r);
-    return std::move(r);
+    return r;
   }
   Expression n;
   Expression d;
@@ -983,7 +982,7 @@ Expression Power::CreateSimplifiedIntegerRationalPower(Integer i, Rational r, bo
   Rational p2 = Rational::Builder(oneExponent, rDenominator);
   Power p = Power::Builder(p1, p2);
   if (r1.isEqualTo(Integer(1)) && !i.isNegative()) {
-    return std::move(p);
+    return p;
   }
   Integer one(1);
   Rational r3 = isDenominator ? Rational::Builder(one, r1) : Rational::Builder(r1);
@@ -1206,7 +1205,7 @@ Expression Power::CreateComplexExponent(const Expression & r, ExpressionNode::Re
   iComplex.shallowReduce(reductionContext);
   Power p = Power::Builder(exp, mExp);
   mExp.shallowReduce(reductionContext);
-  return std::move(p);
+  return p;
 #if 0
   const Constant iComplex = Constant::Builder(UCodePointMathematicalBoldSmallI);
   const Constant pi = Constant::Builder(UCodePointGreekSmallLetterPi);

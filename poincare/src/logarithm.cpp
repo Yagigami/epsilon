@@ -13,11 +13,10 @@
 #include <poincare/serialization_helper.h>
 #include <poincare/undefined.h>
 #include <poincare/unreal.h>
+#include <cmath>
 #include <ion.h>
 #include <assert.h>
-#include <cmath>
 #include <stdlib.h>
-#include <utility>
 
 namespace Poincare {
 
@@ -345,7 +344,7 @@ Expression Logarithm::splitLogarithmInteger(Integer i, bool isDenominator, Expre
       return e;
     }
     Multiplication m = Multiplication::Builder(Rational::Builder(-1), e);
-    return std::move(m);
+    return m;
   }
   Addition a = Addition::Builder();
   for (int index = 0; index < numberOfPrimeFactors; index++) {
@@ -359,7 +358,7 @@ Expression Logarithm::splitLogarithmInteger(Integer i, bool isDenominator, Expre
     a.addChildAtIndexInPlace(m, a.numberOfChildren(), a.numberOfChildren());
     m.shallowReduce(reductionContext);
   }
-  return std::move(a);
+  return a;
 }
 
 Expression Logarithm::shallowBeautify() {
@@ -368,13 +367,13 @@ Expression Logarithm::shallowBeautify() {
   if (childAtIndex(1).isIdenticalTo(e)) {
     NaperianLogarithm np = NaperianLogarithm::Builder(childAtIndex(0));
     replaceWithInPlace(np);
-    return std::move(np);
+    return np;
   }
   Rational ten = Rational::Builder(10);
   if (childAtIndex(1).isIdenticalTo(ten)) {
     CommonLogarithm l = CommonLogarithm::Builder(childAtIndex(0));
     replaceWithInPlace(l);
-    return std::move(l);
+    return l;
   }
   return *this;
 }

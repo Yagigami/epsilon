@@ -10,7 +10,7 @@
 #include <ion/unicode/utf8_helper.h>
 #include <assert.h>
 #include <cmath>
-#include <utility>
+#include <assert.h>
 
 namespace Poincare {
 
@@ -416,7 +416,7 @@ Expression Decimal::setSign(ExpressionNode::Sign s) {
   assert(s == ExpressionNode::Sign::Positive || s == ExpressionNode::Sign::Negative);
   Decimal result = *this;
   result.node()->setNegative(s == ExpressionNode::Sign::Negative);
-  return std::move(result);
+  return result;
 }
 
 Expression Decimal::shallowReduce() {
@@ -453,7 +453,7 @@ Expression Decimal::shallowBeautify() {
     Opposite o = Opposite::Builder();
     replaceWithInPlace(o);
     o.replaceChildAtIndexInPlace(0, abs);
-    return std::move(o);
+    return o;
   }
   return *this;
 }

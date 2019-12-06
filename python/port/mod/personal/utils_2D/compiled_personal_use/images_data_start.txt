@@ -1,0 +1,7 @@
+#ifndef MODPERSONAL_UTILS_2D_SPRITES_DATA_H
+#define MODPERSONAL_UTILS_2D_SPRITES_DATA_H
+
+#include <kandinsky.h>
+
+namespace Sprites {
+

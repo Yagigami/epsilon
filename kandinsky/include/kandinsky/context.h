@@ -4,9 +4,15 @@
 #include <kandinsky/color.h>
 #include <kandinsky/rect.h>
 #include <kandinsky/font.h>
+#include <kandinsky/image.h>
+#include <stdint.h>
 
 class KDContext {
 public:
+  // getPixels's and fillRectWithPixels's "pixels" argument needs to be
+  // a contiguous block of memory. it has the size of rectWidth*rectHeight
+  // and stores pixels from left to right, top to bottom. try to keep your
+  // rectangle always fully in bounds as that slows down both methods a lot.
   void setOrigin(KDPoint origin);
   void setClippingRect(KDRect clippingRect);
 
@@ -22,6 +28,17 @@ public:
 
   // Line. Not anti-aliased.
   void drawLine(KDPoint p1, KDPoint p2, KDColor c);
+
+  // Triangle
+  void fillTriangle(KDPoint p0, KDPoint p1, KDPoint p2, KDColor c);
+  // those two need sorted KDPoint arguments, might be possible to optimize,
+  // probably with integer-based arithmetic instead of casting doubles
+  void fillFlatBottomTriangle(KDPoint top, KDPoint bottomLeft, KDPoint bottomRight, KDColor c);
+  void fillFlatTopTriangle(KDPoint bottom, KDPoint topLeft, KDPoint topRight, KDColor c);
+
+  // Sprite
+  void updateImage(KDPoint p, KDPoint oldp, KDImage const *const spt, KDColor background);
+  void updateAnim(KDPoint p, KDPoint oldp, KDAnimation const *const anim, KDColor background);
 
   // Rect
   void fillRect(KDRect rect, KDColor color);

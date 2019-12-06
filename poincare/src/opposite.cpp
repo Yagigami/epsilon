@@ -7,10 +7,12 @@
 #include <poincare/multiplication.h>
 #include <poincare/rational.h>
 #include <poincare/serialization_helper.h>
-#include <assert.h>
+
+extern "C" {
 #include <cmath>
+#include <assert.h>
 #include <stdlib.h>
-#include <utility>
+}
 
 namespace Poincare {
 
@@ -50,7 +52,7 @@ Layout OppositeNode::createLayout(Preferences::PrintFloatMode floatDisplayMode, 
   } else {
     result.addOrMergeChildAtIndex(childAtIndex(0)->createLayout(floatDisplayMode, numberOfSignificantDigits), 1, false);
   }
-  return std::move(result);
+  return result;
 }
 
 int OppositeNode::serialize(char * buffer, int bufferSize, Preferences::PrintFloatMode floatDisplayMode, int numberOfSignificantDigits) const {

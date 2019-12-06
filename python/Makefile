@@ -126,12 +126,19 @@ extmod_src += $(addprefix python/src/extmod/,\
   modurandom.c \
 )
 
+# changed modkandinsky_table.cpp extension to .c
+
 port_src += $(addprefix python/port/,\
   port.c \
   builtins.c \
   helpers.c \
   mod/kandinsky/modkandinsky.cpp \
-  mod/kandinsky/modkandinsky_table.cpp \
+  mod/kandinsky/modkandinsky_table.c \
+	mod/personal/modpersonal.cpp \
+	mod/personal/modpersonal_table.c \
+	mod/personal/utils_3D/camera.cpp \
+	mod/personal/utils_3D/Mesh_3D.cpp \
+	mod/personal/utils_3D/vectors.cpp \
   mod/time/modtime.c \
   mod/time/modtime_table.c \
   mod/turtle/modturtle.cpp \

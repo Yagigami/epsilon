@@ -11,5 +11,6 @@
 #include <kandinsky/point.h>
 #include <kandinsky/rect.h>
 #include <kandinsky/size.h>
+#include <kandinsky/image.h>
 
 #endif

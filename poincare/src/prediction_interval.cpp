@@ -1,15 +1,16 @@
 #include <poincare/prediction_interval.h>
-#include <poincare/addition.h>
-#include <poincare/division.h>
-#include <poincare/layout_helper.h>
 #include <poincare/matrix.h>
+#include <poincare/addition.h>
 #include <poincare/multiplication.h>
 #include <poincare/power.h>
-#include <poincare/serialization_helper.h>
 #include <poincare/undefined.h>
+#include <poincare/division.h>
+#include <poincare/layout_helper.h>
+#include <poincare/serialization_helper.h>
+extern "C" {
 #include <assert.h>
+}
 #include <cmath>
-#include <utility>
 
 namespace Poincare {
 
@@ -95,7 +96,7 @@ Expression PredictionInterval::shallowReduce(ExpressionNode::ReductionContext re
   matrix.setDimensions(1, 2);
   replaceWithInPlace(matrix);
   matrix.deepReduceChildren(reductionContext);
-  return std::move(matrix);
+  return matrix;
 }
 
 }

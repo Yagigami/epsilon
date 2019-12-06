@@ -3,7 +3,6 @@
 #include <poincare/evaluation.h>
 #include <poincare/matrix_complex.h>
 #include <cmath>
-#include <utility>
 extern "C" {
 #include <assert.h>
 }
@@ -40,7 +39,7 @@ template<typename T> Evaluation<T> ApproximationHelper::Map(const ExpressionNode
       result.addChildAtIndexInPlace(compute(m.complexAtIndex(i), complexFormat, angleUnit), i, i);
     }
     result.setDimensions(m.numberOfRows(), m.numberOfColumns());
-    return std::move(result);
+    return result;
   }
 }
 

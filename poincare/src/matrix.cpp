@@ -9,12 +9,11 @@
 #include <poincare/serialization_helper.h>
 #include <poincare/subtraction.h>
 #include <poincare/undefined.h>
-#include <assert.h>
 #include <cmath>
 #include <float.h>
-#include <stdlib.h>
 #include <string.h>
-#include <utility>
+#include <assert.h>
+#include <stdlib.h>
 
 namespace Poincare {
 
@@ -36,7 +35,7 @@ Layout MatrixNode::createLayout(Preferences::PrintFloatMode floatDisplayMode, in
     layout.addChildAtIndex(c->createLayout(floatDisplayMode, numberOfSignificantDigits), layout.numberOfChildren(), layout.numberOfChildren(), nullptr);
   }
   layout.setDimensions(m_numberOfRows, m_numberOfColumns);
-  return std::move(layout);
+  return layout;
 }
 
 int MatrixNode::serialize(char * buffer, int bufferSize, Preferences::PrintFloatMode floatDisplayMode, int numberOfSignificantDigits) const {
@@ -90,7 +89,7 @@ Evaluation<T> MatrixNode::templatedApproximate(Context * context, Preferences::C
     matrix.addChildAtIndexInPlace(c->approximate(T(), context, complexFormat, angleUnit), matrix.numberOfChildren(), matrix.numberOfChildren());
   }
   matrix.setDimensions(numberOfRows(), numberOfColumns());
-  return std::move(matrix);
+  return matrix;
 }
 
 // MATRIX
@@ -441,7 +440,7 @@ Expression Matrix::computeInverseOrDeterminant(bool computeDeterminant, Expressi
       }
     }
     inverse.setDimensions(dim, dim);
-    return std::move(inverse);
+    return inverse;
   } else {
     *couldCompute = false;
     return Expression();

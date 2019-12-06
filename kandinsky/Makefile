@@ -7,12 +7,15 @@ kandinsky_src += $(addprefix kandinsky/src/,\
   context_pixel.cpp \
   context_rect.cpp \
   context_text.cpp \
+	context_triangle.cpp \
+	context_image.cpp \
   font.cpp \
   framebuffer.cpp \
   framebuffer_context.cpp \
   ion_context.cpp \
   point.cpp \
   rect.cpp \
+	image.cpp \
 )
 
 kandinsky_src += $(addprefix kandinsky/fonts/, \

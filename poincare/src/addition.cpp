@@ -9,7 +9,6 @@
 #include <poincare/subtraction.h>
 #include <poincare/undefined.h>
 #include <assert.h>
-#include <utility>
 
 namespace Poincare {
 
@@ -421,7 +420,7 @@ Expression Addition::factorizeOnCommonDenominator(ExpressionNode::ReductionConte
   a.addChildAtIndexInPlace(result, aChildrenCount, aChildrenCount);
   result.privateShallowReduce(reductionContext, false, true);
   replaceWithInPlace(a);
-  return std::move(a);
+  return a;
 }
 
 void Addition::factorizeChildrenAtIndexesInPlace(int index1, int index2, ExpressionNode::ReductionContext reductionContext) {

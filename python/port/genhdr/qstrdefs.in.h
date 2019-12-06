@@ -23,6 +23,11 @@ Q(fill_rect)
 Q(get_pixel)
 Q(set_pixel)
 
+// Personal QSTRs
+Q(personal)
+Q(hello_world)
+Q(mesh)
+
 // Turtle QSTRs
 Q(turtle)
 Q(forward)

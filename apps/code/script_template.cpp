@@ -2,9 +2,9 @@
 
 namespace Code {
 
-constexpr ScriptTemplate emptyScriptTemplate(".py", "\x01" R"(from math import *
-)");
+constexpr ScriptTemplate emptyScriptTemplate(".py", "\x01");
 
+/*
 constexpr ScriptTemplate squaresScriptTemplate("squares.py", "\x01" R"(from math import *
 from turtle import *
 def squares(angle=0.5):
@@ -52,11 +52,13 @@ def roots(a,b,c):
     return x_1, x_2
   else:
     return None)");
+*/
 
 const ScriptTemplate * ScriptTemplate::Empty() {
   return &emptyScriptTemplate;
 }
 
+/*
 const ScriptTemplate * ScriptTemplate::Squares() {
   return &squaresScriptTemplate;
 }
@@ -68,5 +70,6 @@ const ScriptTemplate * ScriptTemplate::Mandelbrot() {
 const ScriptTemplate * ScriptTemplate::Polynomial() {
   return &polynomialScriptTemplate;
 }
+*/
 
 }
